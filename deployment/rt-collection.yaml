@@ -25,7 +25,7 @@ spec:
             - "root"
             - --database-pass
             - "jalapeno"
-          image: docker.io/sbezverk/rt-collection:wipsquare
+          image: docker.io/sbezverk/rt-collection:wip
           imagePullPolicy: Always
           name: rt-collection
 metadata:
