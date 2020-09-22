@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rt-collection
+  template:
+    metadata:
+      labels:
+        app: rt-collection
+    spec:
+      containers:
+        - args:
+            - --v
+            - "5"
+            - --message-server
+            - "kafka:9092"
+            - --database-server
+            - "http://arangodb.arangodb:28529"
+            - --database-name
+            - "jalapeno"
+            - --database-user
+            - "root"
+            - --database-pass
+            - "jalapeno"
+          image: docker.io/sbezverk/rt-collection:wipsquare
+          imagePullPolicy: Always
+          name: rt-collection
+metadata:
+  name: rt-collection
+  namespace: default

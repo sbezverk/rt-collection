@@ -1,0 +1,4 @@
+FROM scratch
+
+COPY ./bin/rt-collection /rt-collection
+ENTRYPOINT ["/rt-collection"]
