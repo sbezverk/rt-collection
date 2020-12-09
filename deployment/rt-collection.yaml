@@ -18,7 +18,7 @@ spec:
             - --message-server
             - "kafka:9092"
             - --database-server
-            - "http://arangodb.arangodb:28529"
+            - "http://arangodb:28529"
             - --database-name
             - "jalapeno"
             - --database-user

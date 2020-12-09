@@ -14,12 +14,6 @@ import (
 	notifier "github.com/sbezverk/topology/pkg/kafkanotifier"
 )
 
-const (
-	concurrentWorkers = 1024
-	l3vpnCollection   = "L3VPN_Prefix_Test"
-	rtCollection      = "RT_L3VPN_Test"
-)
-
 type arangoDB struct {
 	dbclient.DB
 	*ArangoConn
@@ -30,7 +24,7 @@ type arangoDB struct {
 }
 
 // NewDBSrvClient returns an instance of a DB server client process
-func NewDBSrvClient(arangoSrv, user, pass, dbname string) (dbclient.Srv, error) {
+func NewDBSrvClient(arangoSrv, user, pass, dbname, l3vpnCollection, rtCollection string) (dbclient.Srv, error) {
 	if err := tools.URLAddrValidation(arangoSrv); err != nil {
 		return nil, err
 	}
@@ -143,7 +137,7 @@ func (a *arangoDB) loadStore() error {
 			return err
 		}
 	}
-	glog.Infof("Store after initialization: %+v", a.store)
+	glog.Infof("Loaded %d l3vpn prefix records into the store", len(a.store))
 
 	return nil
 }

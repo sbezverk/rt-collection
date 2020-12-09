@@ -14,11 +14,13 @@ import (
 )
 
 var (
-	msgSrvAddr string
-	dbSrvAddr  string
-	dbName     string
-	dbUser     string
-	dbPass     string
+	msgSrvAddr      string
+	dbSrvAddr       string
+	dbName          string
+	dbUser          string
+	dbPass          string
+	l3vpnCollection string
+	rtCollection    string
 )
 
 func init() {
@@ -28,6 +30,8 @@ func init() {
 	flag.StringVar(&dbName, "database-name", "", "DB name")
 	flag.StringVar(&dbUser, "database-user", "", "DB User name")
 	flag.StringVar(&dbPass, "database-pass", "", "DB User's password")
+	flag.StringVar(&l3vpnCollection, "l3vpn-collection", "L3VPNV4_Prefix_Test", "Collection name for L3VPN prefixes, default: \"L3VPNV4_Prefix_Test\"")
+	flag.StringVar(&rtCollection, "rt-collection", "RT_L3VPNV4_Test", "Collection name for L3VPN Route Targets, default \"RT_L3VPNV4_Test\"")
 }
 
 var (
@@ -55,7 +59,7 @@ func main() {
 	flag.Parse()
 	_ = flag.Set("logtostderr", "true")
 
-	dbSrv, err := arangodb.NewDBSrvClient(dbSrvAddr, dbUser, dbPass, dbName)
+	dbSrv, err := arangodb.NewDBSrvClient(dbSrvAddr, dbUser, dbPass, dbName, l3vpnCollection, rtCollection)
 	if err != nil {
 		glog.Errorf("failed to initialize databse client with error: %+v", err)
 		os.Exit(1)
